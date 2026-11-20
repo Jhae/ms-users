@@ -1,0 +1,124 @@
+appAlias: aliaslocal
+customAlias: customaliaslocal
+app:
+  nombre: appnombrelocal
+mp:
+  messaging:
+    # Avro
+    connector:
+      smallrye-kafka:
+        schema:
+          registry:
+            url: "http://localhost:8084"
+        apicurio:
+          registry:
+            url: "http://localhost:8084"
+    outgoing:
+      new-user-topic-out:
+        topic: "new-user-topic"
+        connector: "smallrye-kafka"
+        # Avro
+        value:
+          serializer: "io.confluent.kafka.serializers.KafkaAvroSerializer"
+    incoming:
+      new-user-notif-topic-in:
+        auto:
+          offset:
+            reset: "earliest"
+        topic: "new-user-notif-topic"
+#OpenAPi
+  openapi:
+    scan:
+      disable: true
+
+# Kafka (Helm)
+kafka:
+  bootstrap:
+    servers: localhost:9092
+
+# ORM: (Helm)
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: pguser
+    password: pgpass
+    jdbc:
+      url: jdbc:postgresql://localhost:5433/bdusuarios
+#    reactive:
+#      url: postgresql://localhost:5433/bdrecado
+
+#  Open APi
+  smallrye-openapi:
+    path: /q/openapi
+
+# Swagger UI (Obligatorio)
+  swagger-ui:
+    always-include: true
+
+# OpenAPi Generator
+  openapi:
+#  openapi-generator:
+#    codegen:
+#      input-base-dir: src/main/resources/openapi
+#      spec:
+#        ms_users_contrat_yml:
+#          base-package: com.ms.users.contract
+    generator:
+      server:
+        use: openapitools
+        base-package: org.arones.contract.ms.users
+        input-base-dir: src/main/resources/META-INF
+        spec: openapi.yml
+        use-rest-response: true
+        use-bean-validation: true
+
+# OpenIDConnect
+  oidc:
+    client-id: theApp
+    auth-server-url: "http://localhost:9090/realms/myrealm"
+    credentials:
+      secret: KZMJqQauhuuEEI5XtKmwiaUVYcWnOcAuC88h8sETWCSS0VsWP10zEjP1v1ALUvpluU6Vfhdd7kYRW5Yj0t0Lgt
+
+  ### TELEMETRIA
+# Para Tempo Grafana (Helm)
+  otel:
+    sdk:
+      disabled: false
+    service:
+      name: ms-users
+    enabled: true
+    traces:
+#      exporter: "otlp"
+    exporter:
+      otlp:
+        endpoint: http://localhost:4317
+
+# Exponer metricas para Prometheus
+  micrometer:
+    export:
+      prometheus:
+        enabled: true
+        path: /q/metrics
+# Formato de logs
+  log:
+    console:
+      format: "%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c.%M] (%t) [traceId=%X{traceId}, spanId=%X{spanId}] %s%e%n"
+
+  # CORS
+  http:
+    port: 8080
+    root-path: "/operations/ms-users"
+    non-application-root-path: "/q"
+    cors:
+      enabled: true
+      origins: "*"
+      methods: GET, POST, PUT, DELETE
+      exposed-headers: Content-Disposition
+      access-control-max-age: 24H
+      access-control-allow-credentials: true
+# Key Vault
+#  azure:
+#    keyvault:
+#      secret:
+#        enabled: false
+#        endpoint: http://azure.net
