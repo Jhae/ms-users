@@ -1,0 +1,45 @@
+# Default values for milab.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+
+appName: repo-name
+version: app-version
+verFmt: app-ver-fmt
+
+# Valores estaticos
+environment: certificacion
+namespace: default
+replicas: 1
+image:
+  repository: jharev/ms-users
+  tag: latest
+
+keyVault:
+  enabled: true
+
+# Valores para inyectar en ms
+properties:
+  customAlias: "QAAlias"
+  # Override
+  # ORM
+  QUARKUS_DATASOURCE_DB_KIND: "postgresql"
+  QUARKUS_DATASOURCE_USERNAME: "pguser"
+
+  QUARKUS_DATASOURCE_JDBC_URL: "jdbc:postgresql://pg-usuarios-svc:5432/bdusuarios"
+
+  # Keycloak
+  QUARKUS_OIDC_AUTH_SERVER_URL: "https://kilometer-childless-absinthe.ngrok-free.dev/realms/myrealm"
+  # Kafka
+  KAFKA_BOOTSTRAP_SERVERS: kafka-svc:9092
+  # Schema Registry Avro
+  MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SCHEMA_REGISTRY_URL: "http://schema-registry-svc:8081"
+  # Telemetria
+  QUARKUS_OTEL_SDK_DISABLED: "false"
+  QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: "http://tempo.monitoring.svc.cluster.local:4317"
+  
+  # Puerto
+  QUARKUS_HTTP_PORT: 8080
+
+
