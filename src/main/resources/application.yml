@@ -36,11 +36,12 @@ kafka:
   bootstrap:
     servers: localhost:9092
 
-# ORM: (Helm)
+
 quarkus:
   application:
     name: ms-users
-    version: "1.1.50"
+    version: "1.0.0"
+# ORM: (Helm)
   datasource:
     db-kind: postgresql
     username: pguser
@@ -77,14 +78,14 @@ quarkus:
         use-rest-response: true
         use-bean-validation: true
 
-# OpenIDConnect
+  # OpenIDConnect
   oidc:
     client-id: theApp
     auth-server-url: "http://localhost:9090/realms/myrealm"
     credentials:
       secret: KZMJqQauhuuEEI5XtKmwiaUVYcWnOcAuC88h8sETWCSS0VsWP10zEjP1v1ALUvpluU6Vfhdd7kYRW5Yj0t0Lgt
 
-  ### TELEMETRIA
+### TELEMETRIA
 # Para Tempo Grafana (Helm)
   otel:
     sdk:
@@ -109,11 +110,12 @@ quarkus:
     console:
       format: "%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c.%M] (%t) [traceId=%X{traceId}, spanId=%X{spanId}] %s%e%n"
 
-  # CORS
+# Puerto
   http:
     port: 8080
     root-path: "/operations/ms-users"
     non-application-root-path: "/q"
+# CORS
     cors:
       enabled: true
       origins: "*"
@@ -121,9 +123,4 @@ quarkus:
       exposed-headers: Content-Disposition
       access-control-max-age: 24H
       access-control-allow-credentials: true
-# Key Vault
-#  azure:
-#    keyvault:
-#      secret:
-#        enabled: false
-#        endpoint: http://azure.net
+
