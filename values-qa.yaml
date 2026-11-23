@@ -4,12 +4,12 @@
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 
-appName: repo-name
-version: app-version
-verFmt: app-ver-fmt
+name: "ms-users"
+version: 1.0.0
+verFmt: "1-0-0"
 
 # Valores estaticos
-environment: certificacion
+environment: desarollo
 namespace: default
 replicas: 1
 image:
@@ -38,7 +38,7 @@ properties:
   # Telemetria
   QUARKUS_OTEL_SDK_DISABLED: "false"
   QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: "http://tempo.monitoring.svc.cluster.local:4317"
-  
+
   # Puerto
   QUARKUS_HTTP_PORT: 8080
 
