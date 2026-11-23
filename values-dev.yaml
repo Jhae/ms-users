@@ -4,9 +4,9 @@
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 
-appName: "ms-users"
+name: "ms-users"
 version: 1.0.0
-verFmt: "1-0-0"
+verFmt: "1-0-3"
 
 # Valores estaticos
 environment: desarrollo
@@ -22,6 +22,9 @@ keyVault:
 # Valores para inyectar en ms
 properties:
   customAlias: "desaAlias from dev.yml"
+  # QUARKUS_APPLICATION_NAME: ms-users
+  # QUARKUS_APPLICATION_VERSION: 1.1.1
+  
   # Override
   # ORM
   QUARKUS_DATASOURCE_DB_KIND: "postgresql"
@@ -39,6 +42,9 @@ properties:
   QUARKUS_OTEL_SDK_DISABLED: "false"
   QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: "http://tempo.monitoring.svc.cluster.local:4317"
 
+  # Api version
+#  MP_OPENAPI_EXTENSIONS_SMALLRYE_INFO_VERSION: "1.1.2"
+#  QUARKUS_SMALLRYE_OPENAPI_INFO_VERSION: "1.1.5"
   # Puerto
   QUARKUS_HTTP_PORT: 8080
 

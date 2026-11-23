@@ -38,6 +38,9 @@ kafka:
 
 # ORM: (Helm)
 quarkus:
+  application:
+    name: ms-users
+    version: "1.1.50"
   datasource:
     db-kind: postgresql
     username: pguser
@@ -50,6 +53,8 @@ quarkus:
 #  Open APi
   smallrye-openapi:
     path: /q/openapi
+    info-title: "${quarkus.application.name}"
+    info-version: "${quarkus.application.version}"
 
 # Swagger UI (Obligatorio)
   swagger-ui:
@@ -85,7 +90,7 @@ quarkus:
     sdk:
       disabled: false
     service:
-      name: ms-users
+      name: "${quarkus.application.name}-${quarkus.application.version}"
     enabled: true
     traces:
 #      exporter: "otlp"
