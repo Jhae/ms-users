@@ -9,7 +9,7 @@ version: 1.0.0
 verFmt: "1-0-0"
 
 # Valores estaticos
-environment: desarollo
+environment: experimental
 namespace: default
 replicas: 1
 image:
@@ -17,20 +17,20 @@ image:
   tag: latest
 
 keyVault:
-  enabled: true
+  enabled: false
 
 # Valores para inyectar en ms
 properties:
-  customAlias: "QAAlias"
+  customAlias: "desaAlias from dev.yml"
   # Override
   # ORM
   QUARKUS_DATASOURCE_DB_KIND: "postgresql"
   QUARKUS_DATASOURCE_USERNAME: "pguser"
-
+  QUARKUS_DATASOURCE_PASSWORD: "pgpass"
   QUARKUS_DATASOURCE_JDBC_URL: "jdbc:postgresql://pg-usuarios-svc:5432/bdusuarios"
 
   # Keycloak
-  QUARKUS_OIDC_AUTH_SERVER_URL: "https://kilometer-childless-absinthe.ngrok-free.dev/realms/myrealm"
+  QUARKUS_OIDC_AUTH_SERVER_URL: "http://host.docker.internal:9090/realms/myrealm"
   # Kafka
   KAFKA_BOOTSTRAP_SERVERS: kafka-svc:9092
   # Schema Registry Avro
